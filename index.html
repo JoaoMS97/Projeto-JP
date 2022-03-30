@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Portal de Login</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="icon" type="imagem/png" href="icon.png" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="content">
+      <div id="login">
+        <h1>Login</h1>
+
+        <input id="UsuarioLogin" name="UsuarioLogin" required="required" type="text"
+          placeholder="Digite Seu Nome Aqui" />
+
+        <input id="UsuarioSenha" name="UsuarioSenha" required="required" type="password"
+          placeholder="Digite Sua Senha Aqui" />
+
+        <input id="buttom" type="submit" value="Logar" />
+        <h4 id="result"></h4>
+      </div>
+    </div>
+  </div>
+  <script>
+
+    function montarObjeto() {
+      const login = document.getElementById("UsuarioLogin").value;
+      const senha = document.getElementById("UsuarioSenha").value;
+
+      const inputDados = {
+        "login": login,
+        "senha": senha
+      }
+      return inputDados
+    }
+
+    async function validarRequisicao() {
+
+      const rawResponse = await fetch('https://localhost:7294/Autenticacao', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(montarObjeto())
+      });
+
+      document.getElementById("result").innerHTML = "Login realizado com sucesso!";
+    }
+    document.getElementById("buttom").addEventListener("click", validarRequisicao);
+  </script>
+</body>
+
+</html>
